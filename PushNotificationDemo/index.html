@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Push Notification Demo</title>
+
+
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/PushNotificationDemo.css" rel="stylesheet" />
+
+    <script src="/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="/Scripts/bootstrap.bundle.min.js"></script>
+    <script src="/Scripts/angular.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-messaging.js"></script>
+
+    <!--<link href="manifest.json" rel="manifest" />-->
+
+    <script src="App/app.module.js"></script>
+
+    <script src="/App/pushNotification/pushNotification.module.js"></script>
+    <script src="/App/pushNotification/pushNotification.constant.js"></script>
+    <script src="/App/pushNotification/pushNotification.config.js"></script>
+    <script src="/App/pushNotification/pushNotification.service.js"></script>
+    <script src="/App/pushNotification/pushNotification.controller.js"></script>
+</head>
+
+<body data-ng-app="app" data-ng-controller="PushNotificationController as pushNotification">
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Push Notification Demo</h1>
+            <p class="lead">This is a simple push notification demo, using Firebase Cloud Messaging (FCM) API in a .NET Framework based backend with a Javascript client</p>
+            <hr class="my-4">
+            <p>For more information visit the documentation from Google</p>
+            <a class="btn btn-primary btn-lg" href="https://firebase.google.com/docs/cloud-messaging" role="button">Documentation</a>
+        </div>
+
+        <div class="text-right">
+            <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-ng-click="pushNotification.openNotifications()">
+                    Notifications <span class="badge badge-light" data-ng-bind="pushNotification.unViewedNotificationCount"></span>
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a data-ng-repeat="notification in pushNotification.notifications" data-ng-click="pushNotification.notificationClicked(notification)" class="dropdown-item" href="#">{{notification.message}}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row form-group">
+            <label class="col-form-label">Your Token:</label>
+
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="pushNotification.token" disabled="disabled" />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-info" data-ng-click="pushNotification.copyToClipboard(pushNotification.token)">Copy</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="form-row form-group">
+            <label class="col-form-label">To:</label>
+
+            <div class="col-md-12">
+                <input type="text" class="form-control" placeholder="Enter destination" data-ng-model="pushNotification.to" />
+            </div>
+        </div>
+
+        <div class="form-row form-group">
+            <label class="col-form-label">Message:</label>
+
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter your message" data-ng-model="pushNotification.message" />
+
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-primary" data-ng-click="pushNotification.sendMessage(pushNotification.to, pushNotification.message)">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>
